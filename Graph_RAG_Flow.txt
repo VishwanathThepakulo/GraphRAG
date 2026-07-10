@@ -1,0 +1,37 @@
+                Documents (PDFs)
+                      │
+                      ▼
+              Document Loader
+                      │
+                      ▼
+                  Chunking
+                      │
+          ┌───────────┴───────────┐
+          │                       │
+          ▼                       ▼
+   Vector Embeddings       Entity Extraction
+          │                       │
+          ▼                       ▼
+     Vector Database      Relationship Extraction
+          │                       │
+          └───────────┬───────────┘
+                      ▼
+               Graph Database
+                   (Neo4j)
+                      │
+──────────────────────────────────────────────
+                 User Question
+                      │
+          ┌───────────┴────────────┐
+          ▼                        ▼
+     Vector Search          Graph Traversal
+          │                        │
+          └───────────┬────────────┘
+                      ▼
+               Merge Context
+                      │
+                      ▼
+                    LLM
+                      │
+                      ▼
+                   Answer
