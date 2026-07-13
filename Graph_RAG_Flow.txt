@@ -35,3 +35,60 @@
                       │
                       ▼
                    Answer
+
+
+
+
+
+GraphRAG/
+
+│
+
+├── loaders/
+│      pdf_loader.py
+│
+├── splitters/
+│      text_splitter.py
+│
+├── embeddings/
+│      embedding.py
+│
+├── graph/
+│      graph_builder.py
+│      neo4j.py
+│
+├── vector/
+│      vector_store.py
+│
+├── retrieval/
+│      graph_retriever.py
+│      vector_retriever.py
+│      hybrid_retriever.py
+│
+├── prompts/
+│
+├── workflow/
+│      graph.py
+│
+├── config.py
+│
+└── main.py
+
+
+Libraries
+
+
+
+| Purpose          | Library                                                         |
+| ---------------- | --------------------------------------------------------------- |
+| Loader           | `langchain_community.document_loaders`                          |
+| Splitter         | `langchain_text_splitters`                                      |
+| Documents        | `langchain_core.documents`                                      |
+| LLM              | `langchain_openai` / `langchain_groq`                           |
+| Embeddings       | `langchain_openai` / `langchain_huggingface`                    |
+| Graph Extraction | `langchain_experimental.graph_transformers.LLMGraphTransformer` |
+| Neo4j            | `langchain_neo4j`                                               |
+| Vector DB        | `langchain_mongodb` (or Chroma/FAISS)                           |
+| Prompt           | `langchain_core.prompts`                                        |
+| Output Parser    | `langchain_core.output_parsers`                                 |
+| Workflow         | `langgraph`                                                     |
