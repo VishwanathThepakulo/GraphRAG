@@ -92,3 +92,35 @@ Libraries
 | Prompt           | `langchain_core.prompts`                                        |
 | Output Parser    | `langchain_core.output_parsers`                                 |
 | Workflow         | `langgraph`                                                     |
+
+
+
+PDF
+
+↓
+
+Documents
+
+↓
+
+Chunks
+
+↓
+
+LLMGraphTransformer
+
+↓
+
+GraphDocuments
+
+↓
+
+Neo4j
+
+↓
+
+Embeddings
+
+↓
+
+MongoDB
