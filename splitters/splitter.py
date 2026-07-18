@@ -13,10 +13,17 @@ class Splitter:
             separators=["\n\n", "\n", " ", ""], 
             add_start_index=True,
         )
-        docs = text_splitter.split_documents(documents)
-        logger.info("Created %d chunks", len(docs))
-        logger.info(f"docs from text splitter is \n===================> {docs}")
-        return docs
+        split_documents = text_splitter.split_documents(documents)
+        logger.info("Created %d chunks", len(split_documents))
+        logger.info(f"docs from text splitter is \n===================> {split_documents}")
+        for chunk_index, doc in enumerate(split_documents):
+            doc.metadata["chunk_index"] = chunk_index
+            doc.metadata["chunk_id"] = (
+                f"{doc.metadata.get('source', 'unknown')}"
+                f"_page_{doc.metadata.get('page', 0)}"
+                f"_chunk_{chunk_index}"
+            )
+        return split_documents
         
 # if __name__=="__main__":
 #     splitter = Splitter()

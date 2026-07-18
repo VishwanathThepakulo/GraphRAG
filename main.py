@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 def main():
     pdfloader = PDFLoader()
     splitter = Splitter()
-    pdf_path = r"C:\Users\Vishwanath\Downloads\2026-Annual-Report-Web.pdf"
+    pdf_path = r"C:\Users\91801\Downloads\LangChain.pdf"
     logger.info(f"Initilization started with file path {pdf_path}")
     response = pdfloader.pdf_loader(pdf_path)
     logger.info(f"Final response is \n=============> {response}")

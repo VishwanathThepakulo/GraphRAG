@@ -1,4 +1,5 @@
-from langchain_docling.loader import DoclingLoader # type: ignore
+# from langchain_docling.loader import DoclingLoader # type: ignore
+from langchain_community.document_loaders import PyPDFLoader
 from langchain_core.documents import Document # type: ignore
 import logging
 
@@ -14,10 +15,11 @@ from splitters.splitter import Splitter
 logger = logging.getLogger(__name__)
 
 class PDFLoader:
-    splitter = Splitter()
+    # splitter = Splitter()
     def pdf_loader(self, file_path: str) -> list[Document]:
         try:
-            loader = DoclingLoader(file_path=file_path)        
+            # loader = DoclingLoader(file_path=file_path)   
+            loader = PyPDFLoader(file_path)                 
             document = loader.load()
             logger.info(f"==========>\n Document loaded successfully {len(document)}")
             # self.splitter.split(document)
@@ -28,7 +30,8 @@ class PDFLoader:
             
 if __name__ == "__main__":
     pdfloader = PDFLoader()
-    pdf_path = r"C:\Users\Vishwanath\Downloads\2026-Annual-Report-Web.pdf"
+    # pdf_path = r"C:\Users\Vishwanath\Downloads\2026-Annual-Report-Web.pdf"
+    pdf_path = r"C:\Users\91801\Downloads\LangChain.pdf"
     logger.info(f"Initilization started with file path {pdf_path}")
     response = pdfloader.pdf_loader(pdf_path)
     logger.info(f"Final response is \n=============> {response}")
