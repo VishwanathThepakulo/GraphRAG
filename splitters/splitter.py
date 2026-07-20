@@ -15,13 +15,13 @@ class Splitter:
         )
         split_documents = text_splitter.split_documents(documents)
         logger.info("Created %d chunks", len(split_documents))
-        logger.info(f"docs from text splitter is \n===================> {split_documents}")
+        # logger.info(f"docs from text splitter is \n===================> {split_documents}")
         for chunk_index, doc in enumerate(split_documents):
             doc.metadata["chunk_index"] = chunk_index
+            source = doc.metadata.get('source', 'unknown')
+            page = doc.metadata.get('page', 0)
             doc.metadata["chunk_id"] = (
-                f"{doc.metadata.get('source', 'unknown')}"
-                f"_page_{doc.metadata.get('page', 0)}"
-                f"_chunk_{chunk_index}"
+                f"{source}_page_{page}_chunk_{chunk_index}"
             )
         return split_documents
         
