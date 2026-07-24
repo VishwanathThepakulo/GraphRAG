@@ -1,7 +1,5 @@
 from langchain_experimental.graph_transformers import LLMGraphTransformer
 
-from langchain_community.graphs import Neo4jGraph
-
 from langchain_core.documents import Document
 
 from langchain.chat_models import init_chat_model
@@ -46,9 +44,6 @@ class BuildingGraph():
             api_key = api_key,
             temperature=0.1,
         )    
-    
-    
-    
     
     
     def graph_building(self, documents:list[Document])->list[Document]:
