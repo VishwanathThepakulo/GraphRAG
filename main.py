@@ -2,8 +2,10 @@ from loaders.pdf_loader import PDFLoader
 from splitters.splitter import Splitter
 from embeddings.embedding import Embeddings
 from graph.graph_builder import BuildingGraph
+from graph.neo4j_store import Neo4jStorage
 import logging
-from dotenv import load_dotenv
+
+from dotenv import load_dotenv #type:ignore
 load_dotenv()
 logging.basicConfig(
     level=logging.INFO,
@@ -19,6 +21,7 @@ def main():
     splitter = Splitter()
     embeddings = Embeddings()
     graph = BuildingGraph()
+    neo4j_storage = Neo4jStorage()
     pdf_path = r"C:\Users\91801\Downloads\gemini-code-1784740274787.pdf"
     logger.info(f"Initilization started with file path {pdf_path}")
 
@@ -37,6 +40,14 @@ def main():
 # 4. Graph
     response_from_graph = graph.graph_building(response_from_splitter)
     logger.info(f"Final response from graph is \n=============> {response_from_graph}")
+    
+# 5. Neo4j storage
+
+    respone_from_neo4jStorage = neo4j_storage.store(response_from_graph)
+    logger.info(f"Final response from graph is \n=============> {respone_from_neo4jStorage}") 
+    
+    
+    
 if __name__ == "__main__":
     main()
 
