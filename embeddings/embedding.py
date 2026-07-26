@@ -43,7 +43,7 @@ class Embeddings:
                     if retry<max_retry-1:
                         time.sleep(2**retry)
                     else:
-                        raise RuntimeError("Embedding generation failed")
+                        raise RuntimeError("Embedding generation failed") from e
             if batch_embeddings:
                 all_embeddings.extend(batch_embeddings)
         logger.info("Successfully generated embeddings for %d chunks", len(texts))
@@ -55,4 +55,5 @@ class Embeddings:
                 "embedding":vector,
                 "metadata":doc.metadata
                 })
+            
         return result 
