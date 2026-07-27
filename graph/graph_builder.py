@@ -40,7 +40,7 @@ class BuildingGraph():
             raise ValueError("LLM api key not found")
         self.model = init_chat_model(
             model='openai/gpt-oss-120b',
-            model_provider='groq',
+            model_provider='groq', 
             api_key = api_key,
             temperature=0.1,
         )    
