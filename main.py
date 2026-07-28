@@ -18,6 +18,33 @@ logging.basicConfig(
 
 logger = logging.getLogger(__name__)
 
+
+async def vector_branch(embeddings, vector, chunk):
+    loop = asyncio.get_running_loop()
+    docs = await loop.run_in_executor(
+        None,
+        embeddings.generate_embeddings,
+        chunk,
+        100 ,
+    )
+    return await vector.vector_storage(docs)
+
+
+async def graph_branch(graph, neo4j_storage, chunk):
+    loop = asyncio.get_running_loop()
+    graph_docs = await loop.run_in_executor(
+        None, 
+        graph.graph_building,
+        chunk,
+    )
+    storage_result = await loop.run_in_executor(
+        None,
+        neo4j_storage.store,
+        graph_docs,
+    )
+    return storage_result
+    
+
 async def main():
     pdfloader = PDFLoader()
     splitter = Splitter()
@@ -36,24 +63,29 @@ async def main():
     response_from_splitter = splitter.split(response_from_pdf)
     logger.info(f"Final response from splitter \n=============> {response_from_splitter}")
 
-# 3a. Embed
-    response_from_embeddings = embeddings.generate_embeddings(response_from_splitter,100)
-    logger.info(f"Final response from embeddings is \n=============> {response_from_embeddings}")
+# # 3a. Embed
+#     response_from_embeddings = embeddings.generate_embeddings(response_from_splitter,100)
+#     logger.info(f"Final response from embeddings is \n=============> {response_from_embeddings}")
     
-# 3b. Vector_storage
-    respone_from_vector_storage = await vector.vector_storage(response_from_embeddings)
-    logger.info(f"Final response from embeddings is \n=============> {respone_from_vector_storage}")    
+# # 3b. Vector_storage
+#     respone_from_vector_storage = await vector.vector_storage(response_from_embeddings)
+#     logger.info(f"Final response from embeddings is \n=============> {respone_from_vector_storage}")    
     
-# 4. Graph
-    response_from_graph = graph.graph_building(response_from_splitter)
-    logger.info(f"Final response from graph is \n=============> {response_from_graph}")
+# # 4a. Graph
+#     response_from_graph = graph.graph_building(response_from_splitter)
+#     logger.info(f"Final response from graph is \n=============> {response_from_graph}")
     
-# 5. Neo4j storage
+# # 4b. Neo4j storage
 
-    respone_from_neo4jStorage = neo4j_storage.store(response_from_graph)
-    logger.info(f"Final response from graph is \n=============> {respone_from_neo4jStorage}") 
-    
-    
+#     respone_from_neo4jStorage = neo4j_storage.store(response_from_graph)
+#     logger.info(f"Final response from graph is \n=============> {respone_from_neo4jStorage}") 
+
+    vector_result, graph_result = await asyncio.gather(
+        vector_branch(embeddings, vector, response_from_splitter),
+        graph_branch(graph, neo4j_storage, response_from_splitter)
+    )
+    logger.info(f"Response from vector result is \n=============>{vector_result}")
+    logger.info(f"Response from graph result is \n=============>{graph_result}")
     
 if __name__ == "__main__":
     asyncio.run(main())
